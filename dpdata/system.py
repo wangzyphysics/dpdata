@@ -173,6 +173,7 @@ class System(MSONable):
         DataType("atom_names", list, (Axis.NTYPES,)),
         DataType("atom_types", np.ndarray, (Axis.NATOMS,)),
         DataType("orig", np.ndarray, (3,)),
+        DataType("tags", np.ndarray, (Axis.NFRAMES, 1, Axis.NATOMS)),
         DataType("cells", np.ndarray, (Axis.NFRAMES, 3, 3)),
         DataType("coords", np.ndarray, (Axis.NFRAMES, Axis.NATOMS, 3)),
         DataType(
@@ -271,6 +272,7 @@ class System(MSONable):
         self.data["orig"] = np.array([0, 0, 0])
         self.data["cells"] = []
         self.data["coords"] = []
+        self.data["tags"] = []
 
         if data:
             self.data = data

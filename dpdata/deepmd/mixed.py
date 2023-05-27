@@ -163,10 +163,13 @@ def dump(folder, data, set_size=2000, comp_prec=np.float32, remove_sets=True):
     nframes = data["cells"].shape[0]
     cells = np.reshape(data["cells"], [nframes, 9]).astype(comp_prec)
     coords = np.reshape(data["coords"], [nframes, -1]).astype(comp_prec)
+    tags = None
     eners = None
     forces = None
     virials = None
     real_atom_types = None
+    if "tags" in data:
+        tags = np.reshape(data["tags"], [nframes, -1]).astype(comp_prec)
     if "energies" in data:
         eners = np.reshape(data["energies"], [nframes]).astype(comp_prec)
     if "forces" in data:
@@ -190,6 +193,8 @@ def dump(folder, data, set_size=2000, comp_prec=np.float32, remove_sets=True):
         os.makedirs(set_folder)
         np.save(os.path.join(set_folder, "box"), cells[set_stt:set_end])
         np.save(os.path.join(set_folder, "coord"), coords[set_stt:set_end])
+        if tags is not None:
+            np.save(os.path.join(set_folder, "tags"), tags[set_stt:set_end])
         if eners is not None:
             np.save(os.path.join(set_folder, "energy"), eners[set_stt:set_end])
         if forces is not None:
